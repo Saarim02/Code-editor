@@ -79,9 +79,11 @@ const App: React.FC = () => {
 
   // Handle file deletion
   const handleDeleteFile = (index: number) => {
-    const updatedFiles = files.filter((_, i) => i !== index);
-    setFiles(updatedFiles);
-  };
+    if (window.confirm('Are you sure you want to delete this file?')) {
+        const updatedFiles = files.filter((_, i) => i !== index);
+        setFiles(updatedFiles);
+    }
+};
 
   // Toggle theme (light/dark)
   const toggleTheme = () => {
