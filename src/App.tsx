@@ -1,9 +1,5 @@
-
-
-
-
 import React, { useState, useEffect, useRef } from 'react';
-import './styles.css'; // Assuming you have the styles in styles.css
+import './styles.css';
 
 type FileType = {
   name: string;
@@ -14,7 +10,6 @@ type FileType = {
 
 const App: React.FC = () => {
   const [theme, setTheme] = useState('dark'); // Default theme is 'dark'
-  const [language, setLanguage] = useState('javascript');
   const [files, setFiles] = useState<FileType[]>([
     { name: 'main.js', language: 'javascript', code: '// Type your JavaScript code here...', active: true },
     { name: 'styles.css', language: 'css', code: '/* Type your CSS code here... */', active: false },
@@ -37,7 +32,6 @@ const App: React.FC = () => {
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const updatedFiles = files.map(file => (file.active ? { ...file, language: e.target.value } : file));
     setFiles(updatedFiles);
-    setLanguage(e.target.value);
   };
 
   // Handle code editor input
@@ -129,7 +123,12 @@ const App: React.FC = () => {
           </select>
           <div>
             <button onClick={() => alert('Code saved!')}>Save</button>
-            <button onClick={() => handleDeleteFile(files.findIndex(file => file.active))}>Delete File</button>
+            <button
+              onClick={() => handleDeleteFile(files.findIndex(file => file.active))}
+              disabled={files.length <= 1}
+            >
+              Delete File
+            </button>
             <button onClick={toggleTheme}>
               {theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
             </button>
